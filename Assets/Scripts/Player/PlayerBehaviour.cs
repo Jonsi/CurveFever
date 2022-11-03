@@ -1,9 +1,6 @@
-using System;
 using State.Player;
 using UniRx;
 using UniRx.Triggers;
-using UnityEditor.Experimental.GraphView;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Player
@@ -24,14 +21,14 @@ namespace Player
         private void Start()
         {
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerMoveState(this));
-            this.OnTriggerEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
+            this.OnCollisionEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
         }
 
         public float GetSpeed() => _moveSpeed;
         public void SetSpeed(float speed) => _moveSpeed = speed;
         public void Move(Vector2 direction) => _headMovementController.Move(direction,_moveSpeed);
 
-        private void OnHit(Collider2D col)
+        private void OnHit(Collision2D col)
         {
            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
         }

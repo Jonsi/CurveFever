@@ -17,7 +17,7 @@ namespace State.Player
         
         public override void EnterState()
         {
-            _inputSubscription =  Observable.EveryUpdate().Subscribe( x => SetDirection(Input.GetAxisRaw("Horizontal")));
+            _inputSubscription =  Observable.EveryFixedUpdate().Subscribe( x => SetDirection(Input.GetAxisRaw("Horizontal")));
         }
 
         public override void ExitState()

@@ -9,7 +9,7 @@ public class TailDrawer : MonoBehaviour
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private EdgeCollider2D _collider;
 
-    public float pointSpacing = 0.1f;
+    public float PointSpacing = 0.1f;
     [Range(0,1f)]public float colliderPointOffset = 0.1f;
 
     private float _lastRotation;
@@ -25,7 +25,7 @@ public class TailDrawer : MonoBehaviour
     private void Update()
     {
         Vector2 lastPos = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1);
-        if (Vector2.Distance(lastPos, _head.position) > pointSpacing)
+        if (Vector2.Distance(lastPos, _head.position) > PointSpacing)
         {
             SetPoint(_head.position);
         }
