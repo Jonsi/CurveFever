@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Utils;
 
 public class TailDrawer : MonoBehaviour
 {
@@ -10,47 +10,44 @@ public class TailDrawer : MonoBehaviour
     [SerializeField] private EdgeCollider2D _collider;
 
     public float PointSpacing = 0.1f;
-    [Range(0,1f)]public float colliderPointOffset = 0.1f;
-
-    private float _lastRotation;
-    private List<Vector2> _points = new List<Vector2>();
+    private readonly List<Vector3> _points = new List<Vector3>();
 
     private void Awake()
     {
-        SetPoint(_head.position,true);
-        //SetPoint(_head.position,true);
-        _lastRotation = _head.rotation.z + 1;
+        AddNewPoint(_head.position);
     }
 
     private void Update()
     {
-        Vector2 lastPos = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1);
-        if (Vector2.Distance(lastPos, _head.position) > PointSpacing)
-        {
-            SetPoint(_head.position);
-        }
+        SyncTailPoints();
+        SyncView();
+        SyncCollider();
     }
 
-    public void SetPoint(Vector2 point, bool asNew = false)
+    private void SyncTailPoints()
     {
-        if (asNew || _head.rotation.z != _lastRotation)
+        var lastRenderedPos = _points.Last();
+        if (Vector2.Distance(lastRenderedPos, _head.position) > PointSpacing)
         {
-            _points.Add(point);
-            _lineRenderer.positionCount++;
-            _lastRotation = _head.rotation.z;
+            AddNewPoint(_head.position);
         }
-        else
-        {
-            _points[_points.Count - 1] = point;
-        }
+    }
+    
+    private void SyncView()
+    {
+        _lineRenderer.positionCount = _points.Count;
+        _lineRenderer.SetPositions(_points.ToArray());
+    }
 
-        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _points.Last());
+    private void SyncCollider()
+    {
+        var points = _points.ToList();
+        points.Remove(points.Last());   //create offset to avoid self collision at creation
+        _collider.points = points.ToArray().ToVector2Array();
+    }
 
-        if(_points.Count > 1)
-        {
-            _points[_points.Count - 1] = _points.Last() + (_points[_points.Count - 2] - _points.Last()).normalized * colliderPointOffset;
-            _collider.points = _points.ToArray();
-        }
-
+    private void AddNewPoint(Vector2 point)
+    {
+        _points.Add(point);
     }
 }
