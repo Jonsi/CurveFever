@@ -12,7 +12,7 @@ namespace Player
         
         private readonly PlayerStateMachine _stateMachine = new PlayerStateMachine();
         private HeadMovementController _headMovementController;
-
+        
         private void Awake()    
         {
             _headMovementController = GetComponent<HeadMovementController>();
@@ -23,11 +23,9 @@ namespace Player
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerMoveState(this));
             this.OnCollisionEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
         }
-
         public float GetSpeed() => _moveSpeed;
         public void SetSpeed(float speed) => _moveSpeed = speed;
-        public void Move(Vector2 direction) => _headMovementController.Move(direction,_moveSpeed);
-
+        public void Rotate(Vector2 direction) => _headMovementController.Move(direction,_moveSpeed);
         private void OnHit(Collision2D col)
         {
            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));

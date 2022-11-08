@@ -9,15 +9,15 @@ namespace State.Player
     {
         private readonly IPlayer _player;
         private IDisposable _inputSubscription;
-    
+
         public PlayerMoveState(IPlayer player)
         {
-            _player = player;
+            this._player = player;
         }
         
         public override void EnterState()
         {
-            _inputSubscription =  Observable.EveryFixedUpdate().Subscribe( x => SetDirection(Input.GetAxisRaw("Horizontal")));
+            _inputSubscription =  Observable.EveryFixedUpdate().Subscribe( x => RotatePlayer(Input.GetAxisRaw("Horizontal")));
         }
 
         public override void ExitState()
@@ -25,10 +25,10 @@ namespace State.Player
             _inputSubscription.Dispose();
         }
         
-        private void SetDirection(float horizontal)
+        private void RotatePlayer(float inputAxis)
         {
-            var direction = Vector2.right * horizontal;
-            _player.Move(direction);
+            var direction = Vector2.right * inputAxis;
+            _player.Rotate(direction);
         }
 
     }

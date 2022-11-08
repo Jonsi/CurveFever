@@ -1,4 +1,6 @@
 ﻿using Player;
+using Tail;
+using UnityEngine;
 
 namespace State.Player
 {

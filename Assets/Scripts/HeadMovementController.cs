@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,7 +15,8 @@ public class HeadMovementController : MonoBehaviour
 
     public void Move(Vector2 direction, float speed)
     {
-        _rigidBody.MovePosition(transform.position +(transform.up * (speed * Time.deltaTime)));
+        var myTransform = transform;
+        _rigidBody.MovePosition(myTransform.position +(myTransform.up * (speed * Time.deltaTime)));
         transform.Rotate(Vector3.forward * (-direction.x * RotationSpeed * Time.deltaTime));
     }
 }
