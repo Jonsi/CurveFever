@@ -383,7 +383,7 @@ MonoBehaviour:
   _head: {fileID: 6259143204582276595}
   PointSpacing: 0.1
   _drawLengthRange: {x: 4, y: 7}
-  _coolDownTime: 0.4
+  _coolDownLength: 0.3
 --- !u!1 &805455332
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b451758e601a64dbf30b71e25702bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _leftButton: 97
+  _rightButton: 100
+  _moveSpeed: 2
+  _rotationSpeed: 100
 --- !u!1 &1796988078
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527e5653c06f254a940cf8438e4daf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 100
 --- !u!50 &6259143204582276593
 Rigidbody2D:
   serializedVersion: 4

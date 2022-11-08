@@ -2,10 +2,11 @@
 
 namespace Player
 {
-    public interface IPlayer
+    public interface IPlayerController
     {
         public float GetSpeed();
         void SetSpeed(float speed);
-        void Rotate(Vector2 direction);
+        void Turn(TurnDirection direction);
+        void MoveForward();
     }
 }

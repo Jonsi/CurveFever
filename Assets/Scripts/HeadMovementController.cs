@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class HeadMovementController : MonoBehaviour
 {
-    public float RotationSpeed = 100f;
     private Rigidbody2D _rigidBody;
 
     private void Awake()
@@ -13,10 +12,21 @@ public class HeadMovementController : MonoBehaviour
 
     public Vector2 MoveDirection { get; set; } = Vector2.up;
 
-    public void Move(Vector2 direction, float speed)
+    public void Turn(TurnDirection turnDirection, float rotationSpeed)
+    {
+        var direction = turnDirection == TurnDirection.Right ? Vector2.right : Vector2.left;
+        transform.Rotate(Vector3.forward * (-direction.x * rotationSpeed * Time.deltaTime));
+    }
+
+    public void MoveForward(float moveSpeed)
     {
         var myTransform = transform;
-        _rigidBody.MovePosition(myTransform.position +(myTransform.up * (speed * Time.deltaTime)));
-        transform.Rotate(Vector3.forward * (-direction.x * RotationSpeed * Time.deltaTime));
+        _rigidBody.MovePosition(myTransform.position +(myTransform.up * (moveSpeed * Time.deltaTime)));
     }
+}
+
+public enum TurnDirection
+{
+    Right,
+    Left
 }

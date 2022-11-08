@@ -15,7 +15,7 @@ namespace Tail
         [Header("Draw Settings")]
         [SerializeField] private float PointSpacing = 0.1f;
         [SerializeField] private Vector2 _drawLengthRange = Vector2.up;
-        [SerializeField] private float _coolDownTime = 0.3f;
+        [SerializeField] private float _coolDownLength = 0.3f;
 
         private TailUnit _currentTail;
         private IDisposable _drawRegistration;
@@ -49,7 +49,7 @@ namespace Tail
         private async void CoolDown()
         {
             StopDraw();
-            await UniTask.Delay((int) (_coolDownTime * 1000));
+            await UniTask.WaitUntil(() => Vector2.Distance(_head.position, _currentTail.LastPoint()) >= _coolDownLength);
             _currentTail.Detach();
             StartDraw();
         }

@@ -7,15 +7,15 @@ namespace PowerUps
     {
         [SerializeField] private float _speed = 1;
         private float _initialSpeed;
-        protected override void ApplyPowerUp(IPlayer player)
+        protected override void ApplyPowerUp(IPlayerController playerController)
         {
-            _initialSpeed = player.GetSpeed();
-            player.SetSpeed(_speed);
+            _initialSpeed = playerController.GetSpeed();
+            playerController.SetSpeed(_speed);
         }
 
-        protected override void UnApplyPowerUp(IPlayer player)
+        protected override void UnApplyPowerUp(IPlayerController playerController)
         {
-            player.SetSpeed(_initialSpeed);
+            playerController.SetSpeed(_initialSpeed);
         }
     }
 }

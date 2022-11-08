@@ -26,7 +26,7 @@ namespace PowerUps
 
         private async void OnHit(Collider2D other)
         {
-            if (other.TryGetComponent<IPlayer>(out var player) == false)
+            if (other.TryGetComponent<IPlayerController>(out var player) == false)
             {
                 return;
             }
@@ -45,7 +45,7 @@ namespace PowerUps
             Destroy(gameObject);//TODO: ADD BACK TO POOL
         }
 
-        protected abstract void ApplyPowerUp(IPlayer player);
-        protected abstract void UnApplyPowerUp(IPlayer player);
+        protected abstract void ApplyPowerUp(IPlayerController playerController);
+        protected abstract void UnApplyPowerUp(IPlayerController playerController);
     }
 }
