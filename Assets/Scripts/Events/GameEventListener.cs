@@ -7,7 +7,7 @@ namespace Events
         private GameEvent<TData> _gameEvent;
         private Action<TData> _action;
 
-        public GameEventListener(GameEvent<TData> gameEvent, Action<TData> action)
+        protected GameEventListener(GameEvent<TData> gameEvent, Action<TData> action)
         {
             _gameEvent = gameEvent;
             _action = action;

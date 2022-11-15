@@ -31,16 +31,16 @@ namespace Tail
             StopDraw();
         }
 
-        private void StartDraw()
+        public void StartDraw()
         {
             _currentTail = Instantiate(_tailPrefab,transform);
             _currentTail.AddPoint(_head.position);
-            _drawRegistration = Observable.EveryFixedUpdate().Subscribe(x => GenerateTailPoint());
+            _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
             var drawLength = Random.Range(_drawLengthRange.x, _drawLengthRange.y);
-            _tailReachMax =  Observable.EveryUpdate().Where((l => _currentTail.Length >= drawLength)).Take(1).Subscribe(x => CoolDown());
+            _tailReachMax =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
         }
 
-        private void StopDraw()
+        public void StopDraw()
         {
             _drawRegistration.Dispose();
             _tailReachMax.Dispose();
@@ -48,8 +48,7 @@ namespace Tail
 
         private async void CoolDown()
         {
-            StopDraw();
-            await UniTask.WaitUntil(() => Vector2.Distance(_head.position, _currentTail.LastPoint()) >= _coolDownLength);
+            await UniTask.WaitUntil(() => Vector2.Distance(_head.position, _currentTail.LastPoint()) >= _coolDownLength).SuppressCancellationThrow();
             _currentTail.Detach();
             StartDraw();
         }

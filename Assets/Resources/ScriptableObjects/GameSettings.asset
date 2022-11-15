@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65cfe1416b024fc5861c162e97974919, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  PlayerPrefab: {fileID: 3853929543328991764, guid: c92fae8de2cb1114a80fa283fb5a38cd, type: 3}
+  PlayerCount: 1
+  PlayerSettings:
+  - {fileID: 11400000, guid: 76cfd9ba483fb384e8bc0b31019380f4, type: 2}
+  - {fileID: 11400000, guid: a5b8adb277715f54a841a7775d8e2608, type: 2}
+  - {fileID: 11400000, guid: 81f89f0435bcb8f4c8ddcd0e099ce14c, type: 2}
+  - {fileID: 11400000, guid: 4a99ffc52b7262342844ede034da88ed, type: 2}
+  SpawnAreaOffset: 0.1

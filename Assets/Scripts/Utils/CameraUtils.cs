@@ -11,5 +11,7 @@ namespace Utils
             var sizeX = sizeY * screenRatio;
             return new Vector2(sizeX, sizeY);
         }
+        
+        
     }
 }

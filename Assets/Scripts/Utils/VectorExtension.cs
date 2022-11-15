@@ -23,5 +23,13 @@ namespace Utils
         {
             return new Vector2 (v3.x, v3.y);
         }
+        
+        public static void RotateTowards(this Transform transform,Vector2 target)
+        {        
+            var direction = ( (Vector2)transform.position - target).normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; 
+            const float offset = 90f;
+            transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+        }
     }
 }

@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Events
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/GameEvent")]
-    public class GameEvent<TData> : ScriptableObject
+    public abstract class GameEvent<TData>  : ScriptableObject
     {
-        private readonly List<GameEventListener<TData>> _listeners = new List<GameEventListener<TData>>();
+        private readonly List<Action<TData>> _listeners = new List<Action<TData>>();
 
         public void Invoke(TData data) 
         {
             foreach(var listener in _listeners)
             {
-                listener.RaiseEvent(data);
+                listener.Invoke(data);
             }
         }
 
-        public void RegisterListener(GameEventListener<TData> listener) => _listeners.Add(listener);
-        public void UnRegisterListener(GameEventListener<TData> listener) => _listeners.Remove(listener);
+        public void RegisterListener(Action<TData> listener) => _listeners.Add(listener);
+        public void UnRegisterListener(Action<TData> listener) => _listeners.Remove(listener);
     }
 }

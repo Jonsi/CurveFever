@@ -8,12 +8,12 @@ namespace State.Player
     {
         public static class PlayerStateFactory
         {
-            public static PlayerMoveState PlayerMoveState(IPlayerController playerController,KeyCode leftButton,KeyCode rightButton)
+            public static PlayerMoveState PlayerMoveState(IPlayer player,KeyCode leftButton,KeyCode rightButton)
             {
-                return new PlayerMoveState(playerController, leftButton, rightButton);
+                return new PlayerMoveState(player, leftButton, rightButton);
             }
 
-            public static PlayerDeadState PlayerDeadState(IPlayerController playerController)
+            public static PlayerDeadState PlayerDeadState(IPlayer player)
             {
                 return new PlayerDeadState();
             }

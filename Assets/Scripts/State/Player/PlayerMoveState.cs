@@ -8,14 +8,14 @@ namespace State.Player
 {
     public class PlayerMoveState : StateBase
     {
-        private readonly IPlayerController _playerController;
+        private readonly IPlayer _player;
         private readonly KeyCode _leftButton;
         private readonly KeyCode _rightButton;
         private readonly List<IDisposable> _disposables = new List<IDisposable>();
 
-        public PlayerMoveState(IPlayerController playerController,KeyCode leftButton, KeyCode rightButton)
+        public PlayerMoveState(IPlayer player,KeyCode leftButton, KeyCode rightButton)
         {
-            this._playerController = playerController;
+            this._player = player;
             _leftButton = leftButton;
             _rightButton = rightButton;
         }
@@ -32,7 +32,7 @@ namespace State.Player
             _disposables.ForEach(d => d.Dispose());
         }
         
-        private void TurnPlayer(TurnDirection turnDirection) => _playerController.Turn(turnDirection);
-        private void MovePlayer() => _playerController.MoveForward();
+        private void TurnPlayer(TurnDirection turnDirection) => _player.Turn(turnDirection);
+        private void MovePlayer() => _player.MoveForward();
     }
 }
