@@ -194,9 +194,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _headMovementController: {fileID: 3853929542841342870}
-  _tailDrawer: {fileID: 7180735709604058995}
+  tailDrawer: {fileID: 7180735709604058995}
   _gameStartedEvent: {fileID: 11400000, guid: 9ed5af9f0785c22408736fb37208f0eb, type: 2}
-  _playerSettings: {fileID: 11400000, guid: 66ac1e562adbe944a993b048fbdaebae, type: 2}
 --- !u!1 &7180735709604058997
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tailPrefab: {fileID: 5179992413286635145, guid: ee746d107f28f36418110fae43b10137, type: 3}
-  _head: {fileID: 3853929542841342869}
+  _followTarget: {fileID: 3853929542841342869}
   PointSpacing: 0.1
-  _drawLengthRange: {x: 4, y: 7}
-  _coolDownLength: 0.3
+  _drawLengthRange: {x: 3, y: 4}
+  _coolDownLength: 2

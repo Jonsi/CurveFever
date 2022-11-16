@@ -6,11 +6,11 @@ using Random = UnityEngine.Random;
 
 namespace Tail
 {
-    public class PlayerTailDrawer : MonoBehaviour
+    public class AutoTailDrawer : MonoBehaviour
     {
         [Header("TailSettings")]
         [SerializeField] private TailUnit _tailPrefab;
-        [SerializeField] private Transform _head;
+        [SerializeField] private Transform _followTarget;
         
         [Header("Draw Settings")]
         [SerializeField] private float PointSpacing = 0.1f;
@@ -34,7 +34,7 @@ namespace Tail
         public void StartDraw()
         {
             _currentTail = Instantiate(_tailPrefab,transform);
-            _currentTail.AddPoint(_head.position);
+            _currentTail.AddPoint(_followTarget.position);
             _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
             var drawLength = Random.Range(_drawLengthRange.x, _drawLengthRange.y);
             _tailReachMax =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
@@ -48,16 +48,23 @@ namespace Tail
 
         private async void CoolDown()
         {
-            await UniTask.WaitUntil(() => Vector2.Distance(_head.position, _currentTail.LastPoint()) >= _coolDownLength).SuppressCancellationThrow();
+            print("Cool Downs");
+            StopDraw();
+            var isCancelled =await UniTask.WaitUntil(() => Vector2.Distance(_followTarget.position, _currentTail.LastPoint()) >= _coolDownLength).SuppressCancellationThrow();
+            /*if (isCancelled)
+            {
+                print("canceled");//TODO: what?
+                return;
+            }*/
             _currentTail.Detach();
             StartDraw();
         }
 
         private void GenerateTailPoint()
         {
-            if (Vector2.Distance(_currentTail.LastPoint(), _head.position) > PointSpacing)
+            if (Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > PointSpacing)
             {
-                _currentTail.AddPoint(_head.position);
+                _currentTail.AddPoint(_followTarget.position);
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Player
     {
         [Header("Components")]
         [SerializeField] private HeadMovementController _headMovementController;
-        [SerializeField] private PlayerTailDrawer _tailDrawer;
+        [SerializeField] private AutoTailDrawer tailDrawer;
 
         [Header("Events")] [SerializeField] private VoidGameEvent _gameStartedEvent;
         
@@ -72,9 +72,9 @@ namespace Player
                 return;
             }
             
-            _tailDrawer.StopDraw();
+            tailDrawer.StopDraw();
             _headMovementController.transform.position = position;
-            _tailDrawer.StartDraw();
+            tailDrawer.StartDraw();
         }
         
         private void OnHit(Collision2D col)
