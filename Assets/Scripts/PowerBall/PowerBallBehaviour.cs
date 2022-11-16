@@ -10,18 +10,26 @@ namespace PowerBall
 {
     
     [RequireComponent(typeof(SpriteRenderer),typeof(Collider2D))]
-    public abstract class PowerBallBase : MonoBehaviour
+    public class PowerBallBehaviour : MonoBehaviour
     {
         [SerializeField] protected float duration = 5f;
-        
-        protected SpriteRenderer spriteRenderer;
-        protected IPlayer hitPlayer;
-        
+
+        private SpriteRenderer _spriteRenderer;
+        private IPlayer _hitPlayer;
+
         private IDisposable _collisionSubscription;
 
+        public PowerBall PowerBall;
+        
         protected virtual void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        private void Start()
+        {
+            SetColor();
+            _spriteRenderer.sprite = PowerBall.Sprite;
         }
 
         private void OnEnable()
@@ -36,20 +44,22 @@ namespace PowerBall
                 return;
             }
 
-            hitPlayer = playerCollider.Player;
+            _hitPlayer = playerCollider.Player;
             _collisionSubscription.Dispose();
-            spriteRenderer.gameObject.SetActive(false);
-            ApplyPower();
+            _spriteRenderer.gameObject.SetActive(false);
+            PowerBall.ApplyPower(_hitPlayer);
             await UniTask.Delay((int) duration * 1000);
-            if (hitPlayer != null)
+            if (_hitPlayer != null)
             {
-                UnApplyPower();
+                PowerBall.UnApplyPower(_hitPlayer);
             }
             Destroy(gameObject);//TODO: ADD BACK TO POOL
         }
-
-        protected abstract void ApplyPower();
-        protected abstract void UnApplyPower();
-
+        
+                
+        private void SetColor()
+        {
+            _spriteRenderer.color = PowerBall.GetColor();
+        }
     }
 }

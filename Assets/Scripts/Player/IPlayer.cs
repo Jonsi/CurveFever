@@ -10,6 +10,7 @@ namespace Player
         void SetRotationSpeed(float speed);
         void Turn(TurnDirection direction);
         void MoveForward();
+        void InvertDirectionInput();
         public PlayerStateData GetStateData();
     }
 }

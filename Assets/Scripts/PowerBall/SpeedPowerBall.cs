@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace PowerBall
 {
+    [CreateAssetMenu]
     public class SpeedPowerBall : PlayerPowerBall
     {
         [Header("Speed Settings")]

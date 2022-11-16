@@ -13,17 +13,12 @@ namespace PowerBall
         Everyone
     }
     
-    public abstract class PlayerPowerBall : PowerBallBase
+    public abstract class PlayerPowerBall : PowerBall
     {
-        [SerializeField] protected TargetPlayers targetPlayers;
+        public TargetPlayers targetPlayers;
         protected readonly Dictionary<IPlayer,PlayerStateData>  playerToStateData = new Dictionary<IPlayer, PlayerStateData>();
-        protected override void Awake()
-        {
-            base.Awake();
-            SetColor();
-        }
-
-        protected override void ApplyPower()
+        
+        public override void ApplyPower(IPlayer hitPlayer)
         {
             switch (targetPlayers)
             {
@@ -51,7 +46,7 @@ namespace PowerBall
             }
         }
 
-        protected override void UnApplyPower()
+        public override void UnApplyPower(IPlayer hitPlayer)
         {
             switch (targetPlayers)
             {
@@ -79,20 +74,24 @@ namespace PowerBall
             }
         }
 
-        protected virtual void ApplyOnPlayer(IPlayer player)
+        public override Color GetColor()
         {
-            playerToStateData.Add(player,player.GetStateData());
-        }
-        protected abstract void UnApplyOnPlayer(IPlayer player);
-        private void SetColor()
-        {
-            spriteRenderer.color = targetPlayers switch
+            var color = targetPlayers switch
             {
                 TargetPlayers.Self => Color.blue,
                 TargetPlayers.Others => Color.red,
                 TargetPlayers.Everyone => Color.magenta,
-                _ => spriteRenderer.color
+                _ => Color.white
             };
+            return color;
         }
+
+        protected virtual void ApplyOnPlayer(IPlayer player)
+        {
+            playerToStateData.Add(player,player.GetStateData());
+        }
+
+        protected abstract void UnApplyOnPlayer(IPlayer player);
+
     }
 }

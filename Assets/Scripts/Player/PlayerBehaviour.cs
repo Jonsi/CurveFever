@@ -60,9 +60,27 @@ namespace Player
         public void SetRotationSpeed(float speed) => _rotationSpeed = speed;
         public void Turn(TurnDirection direction) => _headMovementController.Turn(direction,_rotationSpeed);
         public void MoveForward() => _headMovementController.MoveForward(_moveSpeed);
+        public void InvertDirectionInput()
+        {
+            var rightKey = _rightButton;
+            var leftKey = _leftButton;
+
+            _rightButton = leftKey;
+            _leftButton = rightKey;
+            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerMoveState(this,_leftButton,_rightButton));
+        }
+
         public PlayerStateData GetStateData()
         {
             return new PlayerStateData(_moveSpeed, _rotationSpeed,_leftButton,_rightButton);
+        }
+
+        public void ApplyStateData(PlayerStateData playerStateData)
+        {
+            _moveSpeed = playerStateData.Speed;
+            _rotationSpeed = playerStateData.RotationSpeed;
+            _leftButton = playerStateData.LeftKey;
+            _rightButton = playerStateData.RightKey;
         }
 
         public void Teleport(Vector2 position)

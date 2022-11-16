@@ -6,15 +6,15 @@ namespace Player
     {
         public readonly float Speed;
         public readonly float RotationSpeed;
-        private readonly KeyCode _left;
-        private readonly KeyCode _right;
+        public readonly KeyCode LeftKey;
+        public readonly KeyCode RightKey;
 
-        public PlayerStateData(float speed, float rotationSpeed,KeyCode left,KeyCode right)
+        public PlayerStateData(float speed, float rotationSpeed,KeyCode leftKey,KeyCode rightKey)
         {
             Speed = speed;
             RotationSpeed = rotationSpeed;
-            _left = left;
-            _right = right;
+            LeftKey = leftKey;
+            RightKey = rightKey;
         }
     }
 }
