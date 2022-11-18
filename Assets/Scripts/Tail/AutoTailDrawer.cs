@@ -20,19 +20,11 @@ namespace Tail
         private TailUnit _currentTail;
         private IDisposable _drawRegistration;
         private IDisposable _tailReachMax;
-
-        private void OnEnable()
-        {
-            StartDraw();
-        }
-
-        private void OnDisable()
-        {
-            StopDraw();
-        }
+        private bool _isDrawing = false;
 
         public void StartDraw()
         {
+            _isDrawing = true;
             _currentTail = Instantiate(_tailPrefab,transform);
             _currentTail.AddPoint(_followTarget.position);
             _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
@@ -40,10 +32,18 @@ namespace Tail
             _tailReachMax =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
         }
 
-        public void StopDraw()
+        public async void StopDraw()
         {
+            if (_isDrawing == false)
+            {
+                return;
+            }
+            
             _drawRegistration.Dispose();
             _tailReachMax.Dispose();
+            await UniTask.WaitUntil(() =>
+                Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > PointSpacing);
+            _currentTail.Detach();
         }
 
         private async void CoolDown()
@@ -56,7 +56,6 @@ namespace Tail
                 print("canceled");//TODO: what?
                 return;
             }*/
-            _currentTail.Detach();
             StartDraw();
         }
 

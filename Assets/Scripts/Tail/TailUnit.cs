@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Utils;
 
@@ -35,11 +36,13 @@ namespace Tail
             Length += Vector2.Distance(point, LastPoint());
 
             var pointDirection = (point - LastPoint()).normalized;
+            /*
             var sameDirection = Vector2.Dot(pointDirection, _lastDirection) == 1;
             if (sameDirection)
             {
                 _points.Remove(LastPoint());//avoid creating unnecessary points in the same direction
             }
+            */
             
             _lastDirection = pointDirection;
             

@@ -26,7 +26,7 @@ namespace Player
 
         private void Awake()
         {
-            _headMovementController.OnCollisionEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
+            _headMovementController.OnTriggerEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
         }
         
         private void OnGameStarted()
@@ -95,7 +95,7 @@ namespace Player
             tailDrawer.StartDraw();
         }
         
-        private void OnHit(Collision2D col)
+        private void OnHit(Collider2D col)
         {
            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
         }
