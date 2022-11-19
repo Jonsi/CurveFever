@@ -1,4 +1,6 @@
 using System;
+using Cysharp.Threading.Tasks;
+using DefaultNamespace;
 using Events;
 using State.Player;
 using Tail;
@@ -9,7 +11,7 @@ using Utils;
 
 namespace Player
 {
-    public class PlayerBehaviour : MonoBehaviour,IPlayer
+    public class PlayerBehaviour : MonoBehaviour,IPlayer,IHittable
     {
         [Header("Components")]
         [SerializeField] private HeadMovementController _headMovementController;
@@ -26,7 +28,7 @@ namespace Player
 
         private void Awake()
         {
-            _headMovementController.OnTriggerEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
+           // _headMovementController.OnTriggerEnter2DAsObservable().Subscribe(OnTrigger).AddTo(this);
         }
         
         private void OnGameStarted()
@@ -83,21 +85,22 @@ namespace Player
             _rightButton = playerStateData.RightKey;
         }
 
-        public void Teleport(Vector2 position)
+        public async void Teleport(Vector2 position)
         {
             if (WorldArea.IsInsidePerimeters(position) == false)
             {
                 return;
             }
             
-            tailDrawer.StopDraw();
+            await tailDrawer.StopDraw();
             _headMovementController.transform.position = position;
             tailDrawer.StartDraw();
         }
-        
-        private void OnHit(Collider2D col)
+
+        public void GetHit()
         {
-           _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
+            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
+            tailDrawer.StopDraw().Forget();
         }
     }
 }

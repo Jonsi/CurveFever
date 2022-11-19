@@ -32,7 +32,7 @@ namespace Tail
             _tailReachMax =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
         }
 
-        public async void StopDraw()
+        public async UniTask StopDraw()
         {
             if (_isDrawing == false)
             {
@@ -49,7 +49,7 @@ namespace Tail
         private async void CoolDown()
         {
             print("Cool Downs");
-            StopDraw();
+            await StopDraw();
             var isCancelled =await UniTask.WaitUntil(() => Vector2.Distance(_followTarget.position, _currentTail.LastPoint()) >= _coolDownLength).SuppressCancellationThrow();
             /*if (isCancelled)
             {

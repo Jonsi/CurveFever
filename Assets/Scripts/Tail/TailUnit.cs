@@ -64,7 +64,7 @@ namespace Tail
             _lineRenderer.SetPositions(syncPoints.ToArray().ToVector3Array());
         }
         
-        private void SyncCollider(int offset = 1)
+        private void SyncCollider(int offset = 2)
         {
             var syncPoints = _points.ToList();
             syncPoints.RemoveRange(_points.Count - offset, offset);

@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace PowerBall
 {
-    
     [RequireComponent(typeof(SpriteRenderer),typeof(Collider2D))]
     public class PowerBallBehaviour : MonoBehaviour
     {
@@ -19,22 +18,23 @@ namespace PowerBall
 
         private IDisposable _collisionSubscription;
 
-        public PowerBall PowerBall;
+        private PowerBall _powerBall;
         
         protected virtual void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        private void Start()
-        {
-            SetColor();
-            _spriteRenderer.sprite = PowerBall.Sprite;
-        }
-
         private void OnEnable()
         {
             _collisionSubscription = this.OnTriggerEnter2DAsObservable().Subscribe(OnHit).AddTo(this);
+        }
+
+        public void InitializeUsingSettings(PowerBall powerBall)
+        {
+            _powerBall = powerBall;
+            _spriteRenderer.sprite = _powerBall.Sprite;
+            SetColor();
         }
 
         private async void OnHit(Collider2D other)
@@ -47,11 +47,11 @@ namespace PowerBall
             _hitPlayer = playerCollider.Player;
             _collisionSubscription.Dispose();
             _spriteRenderer.gameObject.SetActive(false);
-            PowerBall.ApplyPower(_hitPlayer);
+            _powerBall.ApplyPower(_hitPlayer);
             await UniTask.Delay((int) duration * 1000);
             if (_hitPlayer != null)
             {
-                PowerBall.UnApplyPower(_hitPlayer);
+                _powerBall.UnApplyPower(_hitPlayer);
             }
             Destroy(gameObject);//TODO: ADD BACK TO POOL
         }
@@ -59,7 +59,7 @@ namespace PowerBall
                 
         private void SetColor()
         {
-            _spriteRenderer.color = PowerBall.GetColor();
+            _spriteRenderer.color = _powerBall.GetColor();
         }
     }
 }

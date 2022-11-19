@@ -449,13 +449,26 @@ GameObject:
   - component: {fileID: 697412022}
   - component: {fileID: 697412023}
   - component: {fileID: 697412024}
+  - component: {fileID: 697412021}
   m_Layer: 0
   m_Name: Boundaries
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &697412021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697412020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c378cc9c8e6439646894220c723d7ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &697412022
 Transform:
   m_ObjectHideFlags: 0
@@ -493,7 +506,7 @@ EdgeCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -532,6 +545,7 @@ Transform:
   m_Children:
   - {fileID: 519420032}
   - {fileID: 697412022}
+  - {fileID: 1431887265}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -626,6 +640,55 @@ Transform:
   m_Father: {fileID: 610249882}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1431887264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431887265}
+  - component: {fileID: 1431887266}
+  m_Layer: 0
+  m_Name: PowerBalls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431887265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431887264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 776439849}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1431887266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431887264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3693852e675685e45bba5f08cafd8073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _powerBallPrefab: {fileID: 7246533737396901892, guid: 7401cc7798ea4d840beca8bf73e3ece6, type: 3}
+  _powerBalls:
+  - {fileID: 11400000, guid: e721647bb6ee8a54c9ddb024459c3e11, type: 2}
+  - {fileID: 11400000, guid: 3a9f8c3a0ba64f1439a2de402aceac70, type: 2}
+  - {fileID: 11400000, guid: 0a5b121806cf23d4ea3fd8ba1c7bcb93, type: 2}
+  _creationEdgeOffset: 0.1
 --- !u!1 &1796988078
 GameObject:
   m_ObjectHideFlags: 0
