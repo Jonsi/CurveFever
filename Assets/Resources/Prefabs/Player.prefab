@@ -194,8 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _headMovementController: {fileID: 3853929542841342870}
-  tailDrawer: {fileID: 7180735709604058995}
+  _tailDrawer: {fileID: 7180735709604058995}
   _gameStartedEvent: {fileID: 11400000, guid: 9ed5af9f0785c22408736fb37208f0eb, type: 2}
+  _tailsClearingEvent: {fileID: 11400000, guid: 0b9a433b0d5b784448de07e91bc794cc, type: 2}
 --- !u!1 &7180735709604058997
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +242,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tailPrefab: {fileID: 5179992413286635145, guid: ee746d107f28f36418110fae43b10137, type: 3}
   _followTarget: {fileID: 3853929542841342869}
+  _tailCreatedEvent: {fileID: 11400000, guid: 43c1d51c404d3f4408a01480053c23ff, type: 2}
   PointSpacing: 0.1
   _drawLengthRange: {x: 3, y: 4}
   _coolDownLength: 0.3
+  colliderPointOffset: 1

@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Events;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +12,7 @@ namespace Tail
         [Header("TailSettings")]
         [SerializeField] private TailUnit _tailPrefab;
         [SerializeField] private Transform _followTarget;
+        [SerializeField] private TailEvent _tailCreatedEvent;
         
         [Header("Draw Settings")]
         [SerializeField] private float PointSpacing = 0.1f;
@@ -30,6 +32,7 @@ namespace Tail
         {
             _isDrawing = true;
             _currentTail = Instantiate(_tailPrefab,transform);
+            _tailCreatedEvent.Invoke(_currentTail);
             _currentTail.ScaleWidth(_tailWidthScale);
             _currentTail.AddPoint(_followTarget.position);
             _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
@@ -50,6 +53,10 @@ namespace Tail
             _isDrawing = false;
             await UniTask.WaitUntil(() =>
                 Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > _coolDownLength);
+            if (_currentTail == null)
+            {
+                return;
+            }
             _currentTail.Detach();
         }
 

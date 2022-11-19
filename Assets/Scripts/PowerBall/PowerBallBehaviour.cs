@@ -37,7 +37,7 @@ namespace PowerBall
             SetColor();
         }
 
-        private async void OnHit(Collider2D other)
+        protected virtual async void OnHit(Collider2D other)
         {
             if (other.TryGetComponent<PlayerCollider>(out var playerCollider) == false)
             {

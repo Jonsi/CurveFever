@@ -13,9 +13,12 @@ namespace Player
     {
         [Header("Components")]
         [SerializeField] private HeadMovementController _headMovementController;
-        [SerializeField] private AutoTailDrawer tailDrawer;
+        [SerializeField] private AutoTailDrawer _tailDrawer;
 
-        [Header("Events")] [SerializeField] private VoidGameEvent _gameStartedEvent;
+        [Header("Events")]
+        [SerializeField] private VoidGameEvent _gameStartedEvent;
+
+        [SerializeField] private VoidGameEvent _tailsClearingEvent;
         
         private KeyCode _leftButton;
         private KeyCode _rightButton;
@@ -42,18 +45,26 @@ namespace Player
         private void OnEnable()
         {
             _gameStartedEvent.RegisterListener(OnGameStarted);
+            _tailsClearingEvent.RegisterListener(OnTailClearing);
+        }
+
+        private async void OnTailClearing()
+        {
+            await _tailDrawer.StopDraw();
+            _tailDrawer.StartDraw();
         }
 
         private void OnDisable()
         {
             _gameStartedEvent.UnRegisterListener(OnGameStarted);
+            _tailsClearingEvent.RegisterListener(OnTailClearing);
         }
 
         public float GetSpeed() => _moveSpeed;
         public void Scale(float multiplier)
         {
             _headMovementController.transform.localScale *= multiplier;
-            tailDrawer.Scale(multiplier);
+            _tailDrawer.Scale(multiplier);
         }
 
         public float GetRotationSpeed() => _rotationSpeed;
@@ -91,14 +102,14 @@ namespace Player
                 return;
             }
             
-            await tailDrawer.StopDraw();
+            await _tailDrawer.StopDraw();
             _headMovementController.transform.position = position;
-            tailDrawer.StartDraw();
+            _tailDrawer.StartDraw();
         }
 
         public void GetHit()
         {
-            tailDrawer.StopDraw().Forget();
+            _tailDrawer.StopDraw().Forget();
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
         }
     }
