@@ -24,11 +24,13 @@ namespace Tail
         private IDisposable _drawRegistration;
         private IDisposable _coolDownRegistration;
         private bool _isDrawing = false;
+        private float _tailWidthScale = 1;
         
         public void StartDraw()
         {
             _isDrawing = true;
             _currentTail = Instantiate(_tailPrefab,transform);
+            _currentTail.ScaleWidth(_tailWidthScale);
             _currentTail.AddPoint(_followTarget.position);
             _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
             var drawLength = Random.Range(_drawLengthRange.x, _drawLengthRange.y);
@@ -64,6 +66,15 @@ namespace Tail
             {
                 _currentTail.AddPoint(_followTarget.position);
             }
+        }
+
+        public async void Scale(float scale)
+        {
+            StopDraw().Forget();
+            PointSpacing *= scale;
+            _coolDownLength *= scale;
+            _tailWidthScale *= scale;
+            StartDraw();
         }
     }
 }

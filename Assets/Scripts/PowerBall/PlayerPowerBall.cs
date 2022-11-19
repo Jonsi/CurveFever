@@ -16,8 +16,6 @@ namespace PowerBall
     public abstract class PlayerPowerBall : PowerBall
     {
         public TargetPlayers targetPlayers;
-        protected readonly Dictionary<IPlayer,PlayerStateData>  playerToStateData = new Dictionary<IPlayer, PlayerStateData>();
-        
         public override void ApplyPower(IPlayer hitPlayer)
         {
             switch (targetPlayers)
@@ -86,10 +84,7 @@ namespace PowerBall
             return color;
         }
 
-        protected virtual void ApplyOnPlayer(IPlayer player)
-        {
-            playerToStateData.Add(player,player.GetStateData());
-        }
+        protected abstract void ApplyOnPlayer(IPlayer player);
 
         protected abstract void UnApplyOnPlayer(IPlayer player);
 

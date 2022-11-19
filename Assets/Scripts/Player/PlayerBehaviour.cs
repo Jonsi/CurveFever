@@ -50,6 +50,12 @@ namespace Player
         }
 
         public float GetSpeed() => _moveSpeed;
+        public void Scale(float multiplier)
+        {
+            _headMovementController.transform.localScale *= multiplier;
+            tailDrawer.Scale(multiplier);
+        }
+
         public float GetRotationSpeed() => _rotationSpeed;
         public void SetSpeed(float speed) => _moveSpeed = speed;
         public void SetRotationSpeed(float speed) => _rotationSpeed = speed;

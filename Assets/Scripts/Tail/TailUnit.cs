@@ -81,5 +81,11 @@ namespace Tail
                 hittable.GetHit();
             }
         }
+
+        public void ScaleWidth(float multiplier)
+        {
+            _lineRenderer.startWidth *= multiplier;
+            _collider.edgeRadius *= multiplier;
+        }
     }
 }

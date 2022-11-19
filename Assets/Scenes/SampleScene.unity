@@ -672,6 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _powerBallPrefab: {fileID: 7246533737396901892, guid: 7401cc7798ea4d840beca8bf73e3ece6, type: 3}
   _powerBalls:
+  - {fileID: 11400000, guid: c7500e7ba47419849b2f9eb4e425542e, type: 2}
   - {fileID: 11400000, guid: e721647bb6ee8a54c9ddb024459c3e11, type: 2}
   - {fileID: 11400000, guid: 3a9f8c3a0ba64f1439a2de402aceac70, type: 2}
   - {fileID: 11400000, guid: 0a5b121806cf23d4ea3fd8ba1c7bcb93, type: 2}
