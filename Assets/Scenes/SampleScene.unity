@@ -449,7 +449,6 @@ GameObject:
   - component: {fileID: 697412022}
   - component: {fileID: 697412023}
   - component: {fileID: 697412024}
-  - component: {fileID: 697412021}
   m_Layer: 0
   m_Name: Boundaries
   m_TagString: Block
@@ -457,18 +456,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &697412021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697412020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c378cc9c8e6439646894220c723d7ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &697412022
 Transform:
   m_ObjectHideFlags: 0

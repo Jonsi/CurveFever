@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using DefaultNamespace;
 using UnityEngine;
 using Utils;
 
@@ -13,7 +15,7 @@ namespace Tail
         private LineRenderer _lineRenderer;
         private EdgeCollider2D _collider;
         private Vector2 _lastDirection = Vector2.zero;
-        
+
         private readonly List<Vector2> _points = new List<Vector2>();
 
         public float Length { get; private set; } = 0;
@@ -25,6 +27,7 @@ namespace Tail
         }
 
         public Vector2 LastPoint() => _points.LastOrDefault();
+
         public void AddPoint(Vector2 point)
         {
             if (_points.Count == 0)
@@ -32,7 +35,7 @@ namespace Tail
                 _points.Add(point);
                 return;
             }
-            
+
             Length += Vector2.Distance(point, LastPoint());
 
             var pointDirection = (point - LastPoint()).normalized;
@@ -43,9 +46,9 @@ namespace Tail
                 _points.Remove(LastPoint());//avoid creating unnecessary points in the same direction
             }
             */
-            
+
             _lastDirection = pointDirection;
-            
+
             _points.Add(point);
             SyncView();
             SyncCollider();
@@ -53,7 +56,7 @@ namespace Tail
 
         public void Detach()
         {
-            SyncCollider(offset:0);
+            SyncCollider(offset: 0);
         }
 
         private void SyncView(int offset = 0)
@@ -63,12 +66,20 @@ namespace Tail
             syncPoints.RemoveRange(_points.Count - offset, offset);
             _lineRenderer.SetPositions(syncPoints.ToArray().ToVector3Array());
         }
-        
+
         private void SyncCollider(int offset = 2)
         {
             var syncPoints = _points.ToList();
             syncPoints.RemoveRange(_points.Count - offset, offset);
             _collider.points = syncPoints.ToArray();
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.TryGetComponent(out IHittable hittable))
+            {
+                hittable.GetHit();
+            }
         }
     }
 }

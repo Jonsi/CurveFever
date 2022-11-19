@@ -17,11 +17,14 @@ namespace Tail
         [SerializeField] private Vector2 _drawLengthRange = Vector2.up;
         [SerializeField] private float _coolDownLength = 0.3f;
 
+        [Header("Collider Settings")]
+        [SerializeField] private int colliderPointOffset = 1;
+
         private TailUnit _currentTail;
         private IDisposable _drawRegistration;
-        private IDisposable _tailReachMax;
+        private IDisposable _coolDownRegistration;
         private bool _isDrawing = false;
-
+        
         public void StartDraw()
         {
             _isDrawing = true;
@@ -29,7 +32,7 @@ namespace Tail
             _currentTail.AddPoint(_followTarget.position);
             _drawRegistration = Observable.EveryFixedUpdate().Subscribe(_ => GenerateTailPoint());
             var drawLength = Random.Range(_drawLengthRange.x, _drawLengthRange.y);
-            _tailReachMax =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
+            _coolDownRegistration =  Observable.EveryUpdate().Where((_ => _currentTail.Length >= drawLength)).Take(1).Subscribe(_ => CoolDown());
         }
 
         public async UniTask StopDraw()
@@ -40,9 +43,11 @@ namespace Tail
             }
             
             _drawRegistration.Dispose();
-            _tailReachMax.Dispose();
+            _coolDownRegistration.Dispose();
+            
+            _isDrawing = false;
             await UniTask.WaitUntil(() =>
-                Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > PointSpacing);
+                Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > _coolDownLength);
             _currentTail.Detach();
         }
 
@@ -50,12 +55,6 @@ namespace Tail
         {
             print("Cool Downs");
             await StopDraw();
-            var isCancelled =await UniTask.WaitUntil(() => Vector2.Distance(_followTarget.position, _currentTail.LastPoint()) >= _coolDownLength).SuppressCancellationThrow();
-            /*if (isCancelled)
-            {
-                print("canceled");//TODO: what?
-                return;
-            }*/
             StartDraw();
         }
 

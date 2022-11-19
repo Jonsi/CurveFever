@@ -4,8 +4,6 @@ using DefaultNamespace;
 using Events;
 using State.Player;
 using Tail;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using Utils;
 
@@ -25,11 +23,6 @@ namespace Player
         private float _rotationSpeed = 100;
         
         private readonly PlayerStateMachine _stateMachine = new PlayerStateMachine();
-
-        private void Awake()
-        {
-           // _headMovementController.OnTriggerEnter2DAsObservable().Subscribe(OnTrigger).AddTo(this);
-        }
         
         private void OnGameStarted()
         {
@@ -99,8 +92,8 @@ namespace Player
 
         public void GetHit()
         {
-            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
             tailDrawer.StopDraw().Forget();
+            _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
         }
     }
 }
