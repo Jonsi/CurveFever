@@ -39,7 +39,7 @@ namespace PowerBall
 
         protected virtual async void OnHit(Collider2D other)
         {
-            if (other.TryGetComponent<PlayerCollider>(out var playerCollider) == false)
+            if (other.TryGetComponent<PlayerCollisionHandler>(out var playerCollider) == false)
             {
                 return;
             }
