@@ -19,9 +19,6 @@ namespace Tail
         [SerializeField] private Vector2 _drawLengthRange = Vector2.up;
         [SerializeField] private float _coolDownLength = 0.3f;
 
-        [Header("Collider Settings")]
-        [SerializeField] private int colliderPointOffset = 1;
-
         private TailUnit _currentTail;
         private IDisposable _drawRegistration;
         private IDisposable _coolDownRegistration;
@@ -81,7 +78,7 @@ namespace Tail
             }
         }
 
-        public async void Scale(float scale)
+        public void Scale(float scale)
         {
             StopDraw().Forget();
             PointSpacing *= scale;

@@ -14,7 +14,6 @@ namespace Player
         [Header("Components")]
         [SerializeField] private HeadMovementController _headMovementController;
         [SerializeField] private AutoTailDrawer _tailDrawer;
-        [SerializeField] private Collider2D _headCollider;
 
         [Header("Events")]
         [SerializeField] private VoidGameEvent _gameStartedEvent;
@@ -90,9 +89,11 @@ namespace Player
             if (killable == true)
             {
                 _tailDrawer.StartDraw();
+                _headMovementController.StopFlicker();
             }
             else
             {
+                _headMovementController.StartFlicker();
                 _tailDrawer.StopDraw().Forget();
             }
 

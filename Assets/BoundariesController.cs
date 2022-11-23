@@ -73,16 +73,16 @@ public class BoundariesController : MonoBehaviour
     {
         _flashRegistration?.Dispose();
         _collider.enabled = true;
-        var startColor = _lineRenderer.startColor;
-        startColor = new Color( startColor.r, startColor.g, startColor.b,1);
-        _lineRenderer.startColor = startColor;
+        var color = _lineRenderer.startColor;
+        color = new Color( color.r, color.g, color.b,1);
+        _lineRenderer.startColor = color;
     }
 
     private void UpdateFlashingAlpha()
     {
         var alpha = (Mathf.Sin(Time.time * _flashingSpeed) + 1) / 2;
-        var startColor = _lineRenderer.startColor;
-        startColor = new Color( startColor.r, startColor.g, startColor.b,alpha);
-        _lineRenderer.startColor = startColor;
+        var color = _lineRenderer.startColor;
+        color = new Color( color.r, color.g, color.b,alpha);
+        _lineRenderer.startColor = color;
     }
 }

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527e5653c06f254a940cf8438e4daf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flickerSpeed: 10
 --- !u!212 &3853929542841342868
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -195,7 +196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _headMovementController: {fileID: 3853929542841342870}
   _tailDrawer: {fileID: 7180735709604058995}
-  _headCollider: {fileID: 3853929542841342872}
   _gameStartedEvent: {fileID: 11400000, guid: 9ed5af9f0785c22408736fb37208f0eb, type: 2}
   _tailsClearingEvent: {fileID: 11400000, guid: 0b9a433b0d5b784448de07e91bc794cc, type: 2}
 --- !u!1 &7180735709604058997
@@ -247,4 +247,3 @@ MonoBehaviour:
   PointSpacing: 0.1
   _drawLengthRange: {x: 3, y: 4}
   _coolDownLength: 0.3
-  colliderPointOffset: 1

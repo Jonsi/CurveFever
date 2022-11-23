@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045a1bc0bf5311841a2bed76f330ba3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colliderOffset: 0.1
+  _colliderOffset: 0.05
   _gameInitialized: {fileID: 11400000, guid: 2b3bf3c6d8f790d4c8c069c820f99dcd, type: 2}
   _boundaryPrefab: {fileID: 6656421657889894969, guid: e4a4affd30a94b1428c5f152c8bca5dd, type: 3}
 --- !u!1 &2109036715
