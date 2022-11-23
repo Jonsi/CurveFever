@@ -44,24 +44,8 @@ namespace Utils
                 WorldArea.BottomRight + offset * (Vector2.down + Vector2.right),
                 WorldArea.BottomLeft + offset * (Vector2.down + Vector2.left),
             };
-            
+
             return points;
         }
-
-        /*public class Area
-        {
-            public readonly Vector2 BottomLeft;
-            public readonly Vector2 TopLeft;
-            public readonly Vector2 TopRight;
-            public readonly Vector2 BottomRight;
-
-            public Area(Vector2 bottomLeft, Vector2 topLeft, Vector2 topRight, Vector2 bottomRight)
-            {
-                BottomLeft = bottomLeft;
-                TopLeft = topLeft;
-                TopRight = topRight;
-                BottomRight = bottomRight;
-            }
-        }*/
     }
 }

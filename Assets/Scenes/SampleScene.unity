@@ -527,7 +527,7 @@ EdgeCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697412020}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -821,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _powerBallPrefab: {fileID: 7246533737396901892, guid: 7401cc7798ea4d840beca8bf73e3ece6, type: 3}
   _powerBalls:
+  - {fileID: 11400000, guid: 36da11da6c702a641bdeda0a20b527df, type: 2}
   - {fileID: 11400000, guid: 2b17dbf1f0327c1428143c629b4c1cf9, type: 2}
   - {fileID: 11400000, guid: c7500e7ba47419849b2f9eb4e425542e, type: 2}
   - {fileID: 11400000, guid: 3b9f712c66b027945896f572ebd488a6, type: 2}

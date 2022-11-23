@@ -14,6 +14,7 @@ namespace Player
         [Header("Components")]
         [SerializeField] private HeadMovementController _headMovementController;
         [SerializeField] private AutoTailDrawer _tailDrawer;
+        [SerializeField] private Collider2D _headCollider;
 
         [Header("Events")]
         [SerializeField] private VoidGameEvent _gameStartedEvent;
@@ -24,6 +25,7 @@ namespace Player
         private KeyCode _rightButton;
         private float _moveSpeed = 1;
         private float _rotationSpeed = 100;
+        private bool _killable = true;
         
         private readonly PlayerStateMachine _stateMachine = new PlayerStateMachine();
         
@@ -31,6 +33,7 @@ namespace Player
         {
             _headMovementController.transform.RotateTowards(Vector2.zero);
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerMoveState(this,_leftButton,_rightButton));
+            _tailDrawer.StartDraw();
         }
 
         public void InitializeUsingSettings(PlayerSettings playerSettings)
@@ -82,33 +85,46 @@ namespace Player
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerMoveState(this,_leftButton,_rightButton));
         }
 
-        public PlayerStateData GetStateData()
+        public void SetKillable(bool killable)
         {
-            return new PlayerStateData(_moveSpeed, _rotationSpeed,_leftButton,_rightButton);
+            if (killable == true)
+            {
+                _tailDrawer.StartDraw();
+            }
+            else
+            {
+                _tailDrawer.StopDraw().Forget();
+            }
+
+            _killable = killable;
         }
 
-        public void ApplyStateData(PlayerStateData playerStateData)
-        {
-            _moveSpeed = playerStateData.Speed;
-            _rotationSpeed = playerStateData.RotationSpeed;
-            _leftButton = playerStateData.LeftKey;
-            _rightButton = playerStateData.RightKey;
-        }
-
-        public async void Teleport(Vector2 position)
+        public void Teleport(Vector2 position)
         {
             if (WorldArea.IsInsidePerimeters(position) == false)
             {
                 return;
             }
-            
-            await _tailDrawer.StopDraw();
-            _headMovementController.transform.position = position;
-            _tailDrawer.StartDraw();
+
+            if (_tailDrawer.IsDrawing)
+            {
+                _tailDrawer.StopDraw().Forget();
+                _headMovementController.transform.position = position;
+                _tailDrawer.StartDraw();
+
+            }
+            else
+            {
+                _headMovementController.transform.position = position;
+            }
         }
 
         public void GetHit()
         {
+            if (_killable == false)
+            {
+                return;
+            }
             _tailDrawer.StopDraw().Forget();
             _stateMachine.SetState(PlayerStateMachine.PlayerStateFactory.PlayerDeadState(this));
         }

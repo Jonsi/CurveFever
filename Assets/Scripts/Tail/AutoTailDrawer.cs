@@ -25,12 +25,18 @@ namespace Tail
         private TailUnit _currentTail;
         private IDisposable _drawRegistration;
         private IDisposable _coolDownRegistration;
-        private bool _isDrawing = false;
+        public bool IsDrawing { get; private set; }
+        
         private float _tailWidthScale = 1;
         
         public void StartDraw()
         {
-            _isDrawing = true;
+            if (IsDrawing)
+            {
+                return;
+            }
+            
+            IsDrawing = true;
             _currentTail = Instantiate(_tailPrefab,transform);
             _tailCreatedEvent.Invoke(_currentTail);
             _currentTail.ScaleWidth(_tailWidthScale);
@@ -42,7 +48,7 @@ namespace Tail
 
         public async UniTask StopDraw()
         {
-            if (_isDrawing == false)
+            if (IsDrawing == false)
             {
                 return;
             }
@@ -50,7 +56,7 @@ namespace Tail
             _drawRegistration.Dispose();
             _coolDownRegistration.Dispose();
             
-            _isDrawing = false;
+            IsDrawing = false;
             await UniTask.WaitUntil(() =>
                 Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > _coolDownLength);
             if (_currentTail == null)

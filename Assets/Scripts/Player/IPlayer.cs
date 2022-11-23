@@ -12,5 +12,6 @@ namespace Player
         void Turn(TurnDirection direction);
         void MoveForward();
         void InvertDirectionInput();
+        void SetKillable(bool killable);
     }
 }

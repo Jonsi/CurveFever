@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Events;
 using UnityEngine;
 using Utils;
@@ -32,16 +33,21 @@ public class BoundariesTeleport : MonoBehaviour
 
     private void OnGameInitialized()
     {
-        _boundaryItems.Add(CreateBoundary(WorldArea.TopLeft, WorldArea.TopRight, BoundariesSide.Top));
-        _boundaryItems.Add(CreateBoundary(WorldArea.BottomLeft, WorldArea.BottomRight, BoundariesSide.Bottom));
-        _boundaryItems.Add(CreateBoundary(WorldArea.BottomLeft, WorldArea.TopLeft, BoundariesSide.Left));
-        _boundaryItems.Add(CreateBoundary(WorldArea.TopRight, WorldArea.BottomRight, BoundariesSide.Right));
+        var bottomLeft = WorldArea.BottomLeft + _colliderOffset * (Vector2.down + Vector2.left);
+        var topLeft = WorldArea.TopLeft + _colliderOffset * (Vector2.up + Vector2.left);
+        var topRight = WorldArea.TopRight + _colliderOffset * (Vector2.up + Vector2.right);
+        var bottomRight = WorldArea.BottomRight + _colliderOffset * (Vector2.down + Vector2.right);
+        
+        _boundaryItems.Add(CreateBoundary(topLeft, topRight, BoundariesSide.Top));
+        _boundaryItems.Add(CreateBoundary(bottomLeft, bottomRight, BoundariesSide.Bottom));
+        _boundaryItems.Add(CreateBoundary(bottomLeft, topLeft, BoundariesSide.Left));
+        _boundaryItems.Add(CreateBoundary(topRight, bottomRight, BoundariesSide.Right));
     }
 
     private Boundary CreateBoundary(Vector2 pointA, Vector2 pointB, BoundariesSide side)
     {
         var boundary = Instantiate(_boundaryPrefab,transform);
-        boundary.Init(new Vector2[]{pointA,pointB},side);
+        boundary.Init(new Vector2[]{pointA ,pointB} ,side);
         boundary.OnHit += OnBoundaryCollision;
         return boundary;
     }

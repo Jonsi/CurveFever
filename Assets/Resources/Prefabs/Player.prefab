@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _headMovementController: {fileID: 3853929542841342870}
   _tailDrawer: {fileID: 7180735709604058995}
+  _headCollider: {fileID: 3853929542841342872}
   _gameStartedEvent: {fileID: 11400000, guid: 9ed5af9f0785c22408736fb37208f0eb, type: 2}
   _tailsClearingEvent: {fileID: 11400000, guid: 0b9a433b0d5b784448de07e91bc794cc, type: 2}
 --- !u!1 &7180735709604058997
