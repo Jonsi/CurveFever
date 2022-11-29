@@ -54,7 +54,7 @@ namespace Tail
             _coolDownRegistration.Dispose();
             
             IsDrawing = false;
-            await UniTask.WaitUntil(() =>
+            await UniTask.WaitUntil(() => _currentTail == null ||
                 Vector2.Distance(_currentTail.LastPoint(), _followTarget.position) > _coolDownLength);
             if (_currentTail == null)
             {
